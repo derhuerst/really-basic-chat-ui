@@ -1,0 +1,32 @@
+{
+	"name": "really-basic-chat-ui",
+	"description": "A minimal command line chat UI.",
+	"version": "0.1.0",
+	"main": "index.js",
+	"files": [
+		"index.js"
+	],
+	"keywords": [
+		"chat",
+		"command line",
+		"cli",
+		"minimal",
+		"ui"
+	],
+	"author": "Jannis R <mail@jannisr.de>",
+	"homepage": "https://github.com/derhuerst/really-basic-chat-ui",
+	"repository": "derhuerst/really-basic-chat-ui",
+	"bugs": "https://github.com/derhuerst/really-basic-chat-ui/issues",
+	"license": "ISC",
+	"engines": {
+		"node": ">=6"
+	},
+	"dependencies": {
+		"chalk": "^2.1.0",
+		"cli-styles": "^0.6.2",
+		"ms": "^2.0.0",
+		"prompt-skeleton": "^0.4.0",
+		"strip-ansi": "^4.0.0",
+		"window-size": "^1.1.0"
+	}
+}
