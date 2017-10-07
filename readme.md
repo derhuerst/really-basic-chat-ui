@@ -5,7 +5,6 @@
 [![asciicast](https://asciinema.org/a/131994.png)](https://asciinema.org/a/131994?t=4)
 
 [![npm version](https://img.shields.io/npm/v/really-basic-chat-ui.svg)](https://www.npmjs.com/package/really-basic-chat-ui)
-[![build status](https://img.shields.io/travis/derhuerst/really-basic-chat-ui.svg)](https://travis-ci.org/derhuerst/really-basic-chat-ui)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/really-basic-chat-ui.svg)
 [![chat on gitter](https://badges.gitter.im/derhuerst.svg)](https://gitter.im/derhuerst)
 
@@ -20,7 +19,25 @@ npm install really-basic-chat-ui
 ## Usage
 
 ```js
-// todo
+const createUI = require('really-basic-chat-ui')
+
+const send = (msg) => {
+	// …
+}
+
+const render = createUI(send)
+render(true, [
+	{from: 'someone', when: 1507404635951, content: 'beep'},
+	{from: 'someone else', when: 1507404635951, content: 'boop'}
+], null, 2)
+```
+
+
+## API
+
+```js
+createUI(sendFn) // -> render
+render(isOpen, messages, err, nrOfPeers)
 ```
 
 
