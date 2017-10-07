@@ -2,7 +2,7 @@
 
 **A minimal command line chat UI.** Used by [really-basic-chat-ui](https://github.com/derhuerst/really-basic-chat-ui#really-basic-chat-ui) and [p2p-really-basic-chat-ui](https://github.com/derhuerst/p2p-really-basic-chat-ui#p2p-really-basic-chat-ui).
 
-[![asciicast](https://asciinema.org/a/131994.png)](https://asciinema.org/a/131994?t=4)
+[screenshot](screenshot.png)
 
 [![npm version](https://img.shields.io/npm/v/really-basic-chat-ui.svg)](https://www.npmjs.com/package/really-basic-chat-ui)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/really-basic-chat-ui.svg)
@@ -28,7 +28,7 @@ const send = (msg) => {
 const render = createUI(send)
 render(true, [
 	{from: 'someone', when: 1507404635951, content: 'beep'},
-	{from: 'someone else', when: 1507404635951, content: 'boop'}
+	{from: 'someone else', when: 1507404635951, content: 'boop', sending: true}
 ], null, 2)
 ```
 

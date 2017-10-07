@@ -6,6 +6,6 @@ const send = () => {}
 const render = createUI(send)
 
 render(true, [
-	{from: 'someone', when: 1507404635951, content: 'beep'},
-	{from: 'someone else', when: 1507404635951, content: 'boop'}
+	{from: 'turtle', when: 1507404635951, content: 'beep'},
+	{from: 'kitten', when: 1507404635951, content: 'boop', sending: true}
 ], null, 2)

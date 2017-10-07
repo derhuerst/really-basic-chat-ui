@@ -1,7 +1,7 @@
 {
 	"name": "really-basic-chat-ui",
 	"description": "A minimal command line chat UI.",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"main": "index.js",
 	"files": [
 		"index.js"
@@ -24,6 +24,7 @@
 	"dependencies": {
 		"chalk": "^2.1.0",
 		"cli-styles": "^0.6.2",
+		"md5-hex": "^2.0.0",
 		"ms": "^2.0.0",
 		"prompt-skeleton": "^0.4.0",
 		"strip-ansi": "^4.0.0",
