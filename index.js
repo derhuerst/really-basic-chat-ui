@@ -52,22 +52,76 @@ const UI = {
 
 	clear: '',
 	render: function (first) {
-		const {width, height} = termSize()
+		const now = Date.now()
+		const {width: termWidth, height: termHeight} = termSize()
+		const msgs = this.messages
+		const maxLines = termHeight - 2
 
+		const rows = []
+		const widths = []
+		const maxWidth = [1, 0, 0, 0]
+
+		// compute table column widths
+		for (let i = msgs.length - 1; i >= 0; i--) {
+			const msg = msgs[i]
+
+			const from = cleanStr(msg.from)
+			const content = cleanStr(msg.content)
+			const row = [
+				msg.sending ? '…' : ' ',
+				ms(now - msg.when),
+				from,
+				content
+			]
+			const width = [ // todo: cache width
+				1,
+				row[1].length, // we don't expect non-ASCII here
+				stringWidth(from),
+				stringWidth(content)
+			]
+
+			if (width[1] > maxWidth[1]) maxWidth[1] = width[1]
+			if (width[2] > maxWidth[2]) maxWidth[2] = width[2]
+			if (width[3] > maxWidth[3]) maxWidth[3] = width[3]
+			rows.push(row)
+			widths.push(width)
+		}
+
+		// render table
 		let out = ''
-		if (this.messages.length > 0) {
-			const messages = this.messages.slice(-height + 2)
-			const now = Date.now()
+		for (
+			let i = rows.length - 1, linesUsed = 0;
+			i >= 0 && linesUsed <= maxLines;
+			i--
+		) {
+			const r = rows[i]
+			const w = widths[i]
 
-			for (let msg of messages) {
-				if (msg.sending) out += '⌛ '
-				out += [
-					chalk.gray(ms(now - msg.when)),
-					chalk.hex(colorHash(msg.from))(msg.from),
-					msg.content
-				].join(' ') + '\n'
+			let pad = maxWidth[0] + 1 + maxWidth[1] + 1 + maxWidth[2] + 1
+			out += r[0] // sending
+			out += ' '.repeat(1 + maxWidth[0] - w[0]) // padding
+			out += chalk.gray(r[1]) // when
+			out += ' '.repeat(1 + maxWidth[1] - w[1]) // padding
+			out += chalk.hex(colorHash(r[2]))(r[2]) // from
+			out += ' '.repeat(1 + maxWidth[2] - w[2]) // padding
+
+			out += runes.substr(r[3], 0, termWidth - pad) // fill up first line
+			linesUsed++
+
+			// fill more lines if necessary
+			pad = termWidth - pad
+			while (pad < (w[3] - 1)) {
+				out += '\n' + runes.substr(r[3], pad, termWidth)
+				linesUsed++
+				pad += termWidth
 			}
-		} else out += chalk.gray('no messages') + '\n'
+
+			out += '\n'
+		}
+
+		if (this.messages.length === 0) {
+			out += chalk.gray('no messages') + '\n'
+		}
 
 		const peers = this.nrOfPeers + ' peers'
 		const err = this.error && this.error.message
