@@ -149,7 +149,6 @@ const defaults = {
 	input: '',
 	open: false,
 	error: null,
-	nrOfPeers: 0,
 	send: () => {},
 
 	renderInterval: null
@@ -163,11 +162,10 @@ const createUI = (send) => {
 		ui.render()
 	}, 10 * 1000)
 
-	const render = (open, messages, err, nrOfPeers) => {
+	const render = (open, messages, err) => {
 		ui.open = open
 		ui.messages = messages
 		ui.error = err
-		ui.nrOfPeers = nrOfPeers
 		ui.render()
 	}
 

@@ -30,7 +30,7 @@ const render = createUI(send)
 render(true, [
 	{from: 'someone', when: 1507404635951, content: 'beep'},
 	{from: 'someone else', when: 1507404635951, content: 'boop', sending: true}
-], null, 2)
+], null)
 ```
 
 
@@ -38,7 +38,7 @@ render(true, [
 
 ```js
 createUI(sendFn) // -> render
-render(isOpen, messages, err, nrOfPeers)
+render(isOpen, messages, err)
 ```
 
 
