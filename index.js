@@ -129,6 +129,7 @@ const UI = {
 		if (err) out += err.slice(0, width - peers.length - 1) + ' '
 		out += chalk.yellow(peers) + '\n'
 
+		// todo: word wrap for input
 		if (this.input) out += chalk.underline(this.input)
 		else out += chalk.gray('type a message…')
 
