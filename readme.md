@@ -1,12 +1,13 @@
 # really-basic-chat-ui
 
-**A minimal command line chat UI.** Used by [really-basic-chat-ui](https://github.com/derhuerst/really-basic-chat-ui#really-basic-chat-ui) and [p2p-really-basic-chat-ui](https://github.com/derhuerst/p2p-really-basic-chat-ui#p2p-really-basic-chat-ui).
+**A minimal command line chat UI.** Used by [local-network-chat](https://github.com/derhuerst/local-network-chat#local-network-chat) and [p2p-local-network-chat](https://github.com/derhuerst/p2p-local-network-chat#p2p-local-network-chat).
 
 [screenshot](screenshot.png)
 
 [![npm version](https://img.shields.io/npm/v/really-basic-chat-ui.svg)](https://www.npmjs.com/package/really-basic-chat-ui)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/really-basic-chat-ui.svg)
 [![chat on gitter](https://badges.gitter.im/derhuerst.svg)](https://gitter.im/derhuerst)
+[![support me on Patreon](https://img.shields.io/badge/support%20me-on%20patreon-fa7664.svg)](https://patreon.com/derhuerst)
 
 
 ## Installing
