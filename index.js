@@ -28,6 +28,8 @@ const cleanStr = (str) => {
 	return cleanedStr
 }
 
+const renderTime = t => Math.abs(t) < 1000 ? 'now' : ms(t)
+
 const UI = {
 	abort: function () {
 		clearInterval(this.renderInterval)
@@ -55,7 +57,7 @@ const UI = {
 		const now = Date.now()
 		const {width: termWidth, height: termHeight} = termSize()
 		const msgs = this.messages
-		const maxLines = termHeight - 2
+		const lines = []
 
 		const rows = []
 		const widths = []
@@ -69,7 +71,7 @@ const UI = {
 			const content = cleanStr(msg.content)
 			const row = [
 				msg.sending ? '…' : ' ',
-				ms(now - msg.when),
+				renderTime(now - msg.when),
 				from,
 				content
 			]
@@ -88,10 +90,9 @@ const UI = {
 		}
 
 		// render table
-		const lines = []
 		for (
 			let i = rows.length - 1, linesUsed = 0;
-			i >= 0 && linesUsed <= maxLines;
+			i >= 0 && linesUsed <= termHeight;
 			i--
 		) {
 			const r = rows[i]
@@ -119,22 +120,26 @@ const UI = {
 			}
 		}
 
-		let out
-		if (this.messages.length === 0) {
-			out = chalk.gray('no messages') + '\n'
-		} else {
-			out = lines.slice(-maxLines).join('\n') + '\n'
-		}
+		if (this.messages.length === 0) lines.push(chalk.gray('no messages'))
 
+		// todo: drop this
 		const peers = this.nrOfPeers + ' peers'
 		const err = this.error && this.error.message
-		if (err) out += err.slice(0, width - peers.length - 1) + ' '
-		out += chalk.yellow(peers) + '\n'
+		if (err) lines.push(err.slice(0, width - peers.length - 1) + ' ')
+		lines.push(chalk.yellow(peers))
 
-		// todo: word wrap for input
-		if (this.input) out += chalk.underline(this.input)
-		else out += chalk.gray('type a message…')
+		if (this.input) {
+			// word wrap input
+			const w = stringWidth(this.input)
+			let start = 0
+			while (start < (w - 1)) {
+				const line = runes.substr(this.input, start, termWidth)
+				lines.push(chalk.underline(line))
+				start += termWidth
+			}
+		} else lines.push(chalk.gray('type a message…'))
 
+		const out = lines.slice(-termHeight).join('\n')
 		this.out.write(this.clear + out)
 		this.clear = cli.clear(out)
 	}
