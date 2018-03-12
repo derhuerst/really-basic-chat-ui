@@ -122,11 +122,10 @@ const UI = {
 
 		if (this.messages.length === 0) lines.push(chalk.gray('no messages'))
 
-		// todo: drop this
-		const peers = this.nrOfPeers + ' peers'
-		const err = this.error && this.error.message
-		if (err) lines.push(err.slice(0, width - peers.length - 1) + ' ')
-		lines.push(chalk.yellow(peers))
+		if (this.error) {
+			const err = this.error.message || (this.error + '')
+			lines.push(chalk.red(err.slice(0)))
+		}
 
 		if (this.input) {
 			// word wrap input
@@ -134,7 +133,7 @@ const UI = {
 			let start = 0
 			while (start < (w - 1)) {
 				const line = runes.substr(this.input, start, termWidth)
-				lines.push(chalk.underline(line))
+				lines.push(chalk.cyan(line))
 				start += termWidth
 			}
 		} else lines.push(chalk.gray('type a message…'))
