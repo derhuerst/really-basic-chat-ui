@@ -59,7 +59,7 @@ const UI = {
 
 		const rows = []
 		const widths = []
-		const maxWidth = [1, 0, 0, 0]
+		const maxWidth = [1, 4, 6, 0]
 
 		// compute table column widths
 		for (let i = msgs.length - 1; i >= 0; i--) {
@@ -97,11 +97,11 @@ const UI = {
 			const r = rows[i]
 			const w = widths[i]
 
-			let pad = maxWidth[0] + 1 + maxWidth[1] + 1 + maxWidth[2] + 1
+			let pad = maxWidth[0] + maxWidth[1] + 1 + maxWidth[2]
 			out += r[0] // sending
-			out += ' '.repeat(1 + maxWidth[0] - w[0]) // padding
+			out += ' '.repeat(maxWidth[0] - w[0]) // padding
 			out += chalk.gray(r[1]) // when
-			out += ' '.repeat(1 + maxWidth[1] - w[1]) // padding
+			out += ' '.repeat(maxWidth[1] - w[1]) // padding
 			out += chalk.hex(colorHash(r[2]))(r[2]) // from
 			out += ' '.repeat(1 + maxWidth[2] - w[2]) // padding
 
@@ -109,11 +109,12 @@ const UI = {
 			linesUsed++
 
 			// fill more lines if necessary
-			pad = termWidth - pad
-			while (pad < (w[3] - 1)) {
-				out += '\n' + runes.substr(r[3], pad, termWidth)
+			let start = termWidth - pad
+			while (start < (w[3] - 1)) {
+				const chunkWidth = termWidth - pad
+				out += '\n' + ' '.repeat(pad) + runes.substr(r[3], start, chunkWidth)
 				linesUsed++
-				pad += termWidth
+				start += chunkWidth
 			}
 
 			out += '\n'
