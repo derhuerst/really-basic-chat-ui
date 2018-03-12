@@ -88,7 +88,7 @@ const UI = {
 		}
 
 		// render table
-		let out = ''
+		const lines = []
 		for (
 			let i = rows.length - 1, linesUsed = 0;
 			i >= 0 && linesUsed <= maxLines;
@@ -98,30 +98,32 @@ const UI = {
 			const w = widths[i]
 
 			let pad = maxWidth[0] + maxWidth[1] + 1 + maxWidth[2]
-			out += r[0] // sending
-			out += ' '.repeat(maxWidth[0] - w[0]) // padding
-			out += chalk.gray(r[1]) // when
-			out += ' '.repeat(maxWidth[1] - w[1]) // padding
-			out += chalk.hex(colorHash(r[2]))(r[2]) // from
-			out += ' '.repeat(1 + maxWidth[2] - w[2]) // padding
-
-			out += runes.substr(r[3], 0, termWidth - pad) // fill up first line
+			lines.push((
+				r[0] + // sending
+				' '.repeat(maxWidth[0] - w[0]) + // padding
+				chalk.gray(r[1]) + // when
+				' '.repeat(maxWidth[1] - w[1]) + // padding
+				chalk.hex(colorHash(r[2]))(r[2]) + // from
+				' '.repeat(1 + maxWidth[2] - w[2]) + // padding
+				runes.substr(r[3], 0, termWidth - pad) // fill up first line
+			))
 			linesUsed++
 
 			// fill more lines if necessary
 			let start = termWidth - pad
 			while (start < (w[3] - 1)) {
 				const chunkWidth = termWidth - pad
-				out += '\n' + ' '.repeat(pad) + runes.substr(r[3], start, chunkWidth)
+				lines.push(' '.repeat(pad) + runes.substr(r[3], start, chunkWidth))
 				linesUsed++
 				start += chunkWidth
 			}
-
-			out += '\n'
 		}
 
+		let out
 		if (this.messages.length === 0) {
-			out += chalk.gray('no messages') + '\n'
+			out = chalk.gray('no messages') + '\n'
+		} else {
+			out = lines.slice(-maxLines).join('\n') + '\n'
 		}
 
 		const peers = this.nrOfPeers + ' peers'
