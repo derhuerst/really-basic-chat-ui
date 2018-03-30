@@ -112,7 +112,7 @@ const UI = {
 
 			// fill more lines if necessary
 			let start = termWidth - pad
-			while (start < (w[3] - 1)) {
+			while (start < w[3]) {
 				const chunkWidth = termWidth - pad
 				lines.push(' '.repeat(pad) + runes.substr(r[3], start, chunkWidth))
 				linesUsed++
@@ -131,7 +131,7 @@ const UI = {
 			// word wrap input
 			const w = stringWidth(this.input)
 			let start = 0
-			while (start < (w - 1)) {
+			while (start < w) {
 				const line = runes.substr(this.input, start, termWidth)
 				lines.push(chalk.cyan(line))
 				start += termWidth
