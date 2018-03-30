@@ -52,7 +52,6 @@ const UI = {
 		this.render()
 	},
 
-	clear: '',
 	render: function (first) {
 		const now = Date.now()
 		const {width: termWidth, height: termHeight} = termSize()
@@ -138,9 +137,7 @@ const UI = {
 			}
 		} else lines.push(chalk.gray('type a message…'))
 
-		const out = lines.slice(-termHeight).join('\n')
-		this.out.write(this.clear + out)
-		this.clear = cli.clear(out)
+		this.out.write(lines.slice(-termHeight).join('\n'))
 	}
 }
 
