@@ -119,16 +119,22 @@ const UI = {
 			}
 		}
 
+		const w = stringWidth(this.input)
+
 		if (this.messages.length === 0) lines.push(chalk.gray('no messages'))
 
 		if (this.error) {
-			const err = this.error.message || (this.error + '')
-			lines.push(chalk.red(err.slice(0)))
+			const err = cleanStr(this.error.message || (this.error + ''))
+			let start = 0
+			while (start < w) { // word wrap
+				const line = runes.substr(err, start, termWidth)
+				lines.push(chalk.red(line))
+				start += termWidth
+			}
 		}
 
 		if (this.input) {
 			// word wrap input
-			const w = stringWidth(this.input)
 			let start = 0
 			while (start < w) {
 				const line = runes.substr(this.input, start, termWidth)

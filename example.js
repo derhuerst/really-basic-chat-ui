@@ -7,6 +7,7 @@ const msgs = [
 	{from: 'user123', when: Date.now() - 10000, content: 'foo 😀 bar', sending: true},
 	{from: 'someone', when: Date.now() - 100, content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus enim ad, illo sequi? Nemo autem sequi temporibus voluptatum odio voluptas architecto molestiae vel consectetur repudiandae suscipit nulla perferendis quo, minus minima sint totam facere commodi delectus accusamus quos nesciunt velit veritatis ut? Assumenda molestiae, tenetur qui velit similique facilis consequuntur!'}
 ]
+let err = null
 
 const send = (msg) => {
 	msgs.push({
@@ -18,5 +19,11 @@ const send = (msg) => {
 }
 
 const render = createUI(send)
-const rerender = () => render(true, msgs, null)
+const rerender = () => render(true, msgs, err)
 rerender()
+
+setInterval(() => {
+	if (err) err = null
+	else err = new Error('some complicated random error with a really really really long message.')
+	rerender()
+}, 5 * 1000)
